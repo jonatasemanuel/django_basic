@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ro1d2$s+=)5&v*4b+5=*ngvwv-!&c)jj8yens&7@qb31x+f3c%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  False
+DEBUG =  True
 
-ALLOWED_HOSTS = ['https://storebasic-je.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -125,3 +125,18 @@ STATIC_URL = '/static/' # Usado durante o desenvolvimeto
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Usado durante a produção
 
 LOGOUT_REDIRECT_URL = 'index'
+
+if os.getcwd() == '/app':
+    # Honra o cabeçãlho 'X-Forwarded-Photo' para request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    # Cabeçalhos para permitir todos os host
+    #ALLOWED_HOSTS = ['*']
+    # Only allow heroku to host the project.
+    ALLOWED_HOSTS = ['storebasic-je.herokuapp.com/']
+    DEBUG = False
+    # Configuração de recursos estáticos
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = 'staticfiles'
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
