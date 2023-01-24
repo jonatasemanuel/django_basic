@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,13 +43,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'geek_basic.urls'
@@ -126,17 +126,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Usado durante a produção
 
 LOGOUT_REDIRECT_URL = 'index'
 
-if os.getcwd() == '/app':
-    # Honra o cabeçãlho 'X-Forwarded-Photo' para request.is_secure()
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    # Cabeçalhos para permitir todos os host
-    #ALLOWED_HOSTS = ['*']
-    # Only allow heroku to host the project.
-    ALLOWED_HOSTS = ['storebasic-je.herokuapp.com/']
-    DEBUG = False
-    # Configuração de recursos estáticos
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = 'staticfiles'
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
+django_heroku.settings(locals())
