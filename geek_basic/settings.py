@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import django_heroku
+import django_on_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -125,4 +125,4 @@ STATIC_URL = '/static/' # Usado durante o desenvolvimeto
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Usado durante a produção
 
 LOGOUT_REDIRECT_URL = 'index'
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
